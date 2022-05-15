@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  db:
+    image: mariadb:10.7
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: par00l
+      MYSQL_ROOT_PASSWORD: passw0rd12345678910
+    volumes:
+      - db_data:/var/lib/mysql 
+  wp:
+    depends_on:
+      - db
+    build:
+      dockerfile: ./app.dockerfile
+      context: .
+    ports:
+      - 80:80    
+    volumes:
+      - ./sites-available:/etc/apache2/sites-available
+volumes:
+  db_data:
+
+
